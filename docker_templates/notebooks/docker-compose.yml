@@ -1,0 +1,23 @@
+version: '3'
+services:
+  notebook-env:
+    container_name: notebook-env
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile
+      args:
+        UID: $UID
+        GID: $GID
+        UNAME: $UNAME
+        PROXY: $PROXY
+        OSTYPE: $OSTYPE
+
+    user: $UID:$GID
+    working_dir: /home/$UNAME/workspace
+
+    ipc: host
+    volumes:
+      - ./source:/home/$UNAME/workspace
+
+    tty: true
+    restart: always
